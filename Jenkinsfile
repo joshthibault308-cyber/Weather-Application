@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
             dir('my-app') {
-                bat 'make'
+                bat 'mvn clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                 }
             }
@@ -15,7 +15,7 @@ pipeline {
             dir('my-app') {
                bat 'mvn test || exit 0'
                }
-               junit '**/target/*.xml'
+               junit '**/target/surefire-reports/*.xml'
             }
         }
         stage('Deploy') {
