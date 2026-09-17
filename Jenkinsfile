@@ -13,9 +13,9 @@ pipeline {
         stage('Test') {
             steps {
             dir('my-app') {
-               bat 'mvn check || exit 0'
+               bat 'mvn test || exit 0'
                }
-               junit '**/target/*.xml'
+               junit '**/target/surefire-reports/*.xml'
             }
         }
         stage('Deploy') {
