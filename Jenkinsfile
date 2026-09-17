@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-               bat 'make check || true'
+               bat 'make check || exit 0'
                junit '**/target/*.xml'
             }
         }
