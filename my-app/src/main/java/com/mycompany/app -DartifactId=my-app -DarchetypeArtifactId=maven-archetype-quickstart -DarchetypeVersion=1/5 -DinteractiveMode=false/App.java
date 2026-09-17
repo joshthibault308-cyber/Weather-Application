@@ -11,6 +11,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import com.sun.net.httpserver.*;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
 public class App {
 
     public static void main(String[] args) throws IOException {
@@ -134,6 +145,9 @@ public class App {
 
     static String apiPicture(String placeCoordinates, int daysAfter) {
 
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH"));
+        String dateTime = "startTime\": \"" + date;
+
         if (daysAfter == 0) {
             String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
             int startIndex = coordinates.indexOf("forecastHourly") + 18;
@@ -147,13 +161,67 @@ public class App {
             startIndex = text.indexOf(dateTime);
             text = text.substring(startIndex);
 
-            startIndex = text.indexOf("icon") + 15;
-            endIndex = text.indexOf("\"");
-            text = text.substring(startIndex, endIndex);
-            text = text.replaceAll("\\D", "");
+            startIndex = text.indexOf("icon") + 7;
+            text = text.substring(startIndex);
+            endIndex = text.indexOf(", ");
+            text = text.substring(0, endIndex);
 
-            return Integer.parseInt(text);
+            return "<img src=" + text + " width=\"25\" height=\"25\"\"> ";
 
+
+        } else {
+
+            String dayofWeek = String.valueOf(LocalDateTime.now().plusDays(daysAfter).getDayOfWeek());
+            dayofWeek = dayofWeek.charAt(0) + dayofWeek.substring(1).toLowerCase();
+
+            String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
+            int startIndex = coordinates.indexOf("forecast\": ") + 12;
+            coordinates = coordinates.substring(startIndex);
+            int endIndex = coordinates.indexOf('"');
+            coordinates = coordinates.substring(0, endIndex);
+
+
+            String text = WeatherAPI(coordinates);
+
+            startIndex = text.indexOf(dayofWeek);
+            text = text.substring(startIndex);
+
+            startIndex = text.indexOf("icon") + 7;
+            text = text.substring(startIndex);
+            endIndex = text.indexOf(", ");
+            text = text.substring(0, endIndex);
+
+            return "<img src=" + text + " width=\"25\" height=\"25\"\"> ";
+
+        }
+
+    }
+
+    static String stringForecast(String placeCoordinates, int daysAfter) {
+
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH"));
+        String dateTime = "startTime\": \"" + date;
+
+        if (daysAfter == 0) {
+            String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
+            int startIndex = coordinates.indexOf("forecastHourly") + 18;
+            coordinates = coordinates.substring(startIndex);
+            int endIndex = coordinates.indexOf("\"");
+            coordinates = coordinates.substring(0, endIndex);
+
+
+            String text = WeatherAPI(coordinates);
+
+            startIndex = text.indexOf(dateTime);
+            text = text.substring(startIndex);
+
+            startIndex = text.indexOf("shortForecast") + 17;
+            text = text.substring(startIndex);
+            endIndex = text.indexOf('"');
+            text = text.substring(0, endIndex);
+
+
+            return text;
 
         } else {
 
@@ -172,12 +240,13 @@ public class App {
             startIndex = text.indexOf(dayofWeek);
             text = text.substring(startIndex);
 
-            startIndex = text.indexOf("icon") + 15;
-            endIndex = text.indexOf("\"");
-            text = text.substring(startIndex, endIndex);
-            text = text.replaceAll("\\D", "");
+            startIndex = text.indexOf("detailedForecast") + 20;
+            text = text.substring(startIndex);
+            endIndex = text.indexOf('"');
+            text = text.substring(0, endIndex);
 
-            return Integer.parseInt(text);
+
+            return text;
 
         }
 
@@ -188,17 +257,18 @@ public class App {
         int temperature = getTemp(placeCoordinates, daysAfter);
         String image = tempPicture(temperature);
         String image2 = apiPicture(placeCoordinates, daysAfter);
+        String detailedForecast = stringForecast(placeCoordinates, daysAfter);
 
         String dayofWeek = String.valueOf(LocalDateTime.now().plusDays(daysAfter).getDayOfWeek());
         dayofWeek = dayofWeek.charAt(0) + dayofWeek.substring(1).toLowerCase();
 
         if (daysAfter == 0) {
 
-            return image + image2 + "Hourly Temperature: " + temperature + "<br>";
+            return image + image2 + "Hourly Temperature: " + temperature + "<br>" + detailedForecast + "<br> <br>";
 
         } else {
 
-            return image + image2 + dayofWeek + " Temperature: " + temperature + "<br>";
+            return image + image2 + dayofWeek + " Temperature: " + temperature + "<br>" + detailedForecast + "<br> <br>";
 
         }
 
