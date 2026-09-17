@@ -13,7 +13,7 @@ pipeline {
         stage('Test') {
             steps {
             dir('my-app') {
-               bat 'make check || exit 0'
+               bat 'mvn check || exit 0'
                }
                junit '**/target/*.xml'
             }
@@ -26,7 +26,7 @@ pipeline {
                 }
             steps {
             dir('my-app') {
-                bat 'make publish'
+                bat 'mvn install'
                 }
             }
         }
