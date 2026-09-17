@@ -135,106 +135,104 @@ public class App {
     static String apiPicture(String placeCoordinates, int daysAfter) {
 
         if (daysAfter == 0) {
-
-            if (daysAfter == 0) {
-                String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
-                int startIndex = coordinates.indexOf("forecastHourly") + 18;
-                coordinates = coordinates.substring(startIndex);
-                int endIndex = coordinates.indexOf("\"");
-                coordinates = coordinates.substring(0, endIndex);
+            String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
+            int startIndex = coordinates.indexOf("forecastHourly") + 18;
+            coordinates = coordinates.substring(startIndex);
+            int endIndex = coordinates.indexOf("\"");
+            coordinates = coordinates.substring(0, endIndex);
 
 
-                String text = WeatherAPI(coordinates);
+            String text = WeatherAPI(coordinates);
 
-                startIndex = text.indexOf(dateTime);
-                text = text.substring(startIndex);
+            startIndex = text.indexOf(dateTime);
+            text = text.substring(startIndex);
 
-                startIndex = text.indexOf("icon") + 15;
-                endIndex = text.indexOf("\"");
-                text = text.substring(startIndex, endIndex);
-                text = text.replaceAll("\\D", "");
+            startIndex = text.indexOf("icon") + 15;
+            endIndex = text.indexOf("\"");
+            text = text.substring(startIndex, endIndex);
+            text = text.replaceAll("\\D", "");
 
-                return Integer.parseInt(text);
-
-
-            } else {
-
-                String dayofWeek = String.valueOf(LocalDateTime.now().plusDays(daysAfter).getDayOfWeek());
-                dayofWeek = dayofWeek.charAt(0) + dayofWeek.substring(1).toLowerCase();
-
-                String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
-                int startIndex = coordinates.indexOf("forecast\": ") + 12;
-                coordinates = coordinates.substring(startIndex);
-                int endIndex = coordinates.indexOf("\"");
-                coordinates = coordinates.substring(0, endIndex);
+            return Integer.parseInt(text);
 
 
-                String text = WeatherAPI(coordinates);
-
-                startIndex = text.indexOf(dayofWeek);
-                text = text.substring(startIndex);
-
-                startIndex = text.indexOf("icon") + 15;
-                endIndex = text.indexOf("\"");
-                text = text.substring(startIndex, endIndex);
-                text = text.replaceAll("\\D", "");
-
-                return Integer.parseInt(text);
-
-            }
-
-        }
-
-        static String tempHTML (String placeCoordinates,int daysAfter){
-
-            int temperature = getTemp(placeCoordinates, daysAfter);
-            String image = tempPicture(temperature);
-            String image2 = apiPicture(placeCoordinates, daysAfter);
+        } else {
 
             String dayofWeek = String.valueOf(LocalDateTime.now().plusDays(daysAfter).getDayOfWeek());
             dayofWeek = dayofWeek.charAt(0) + dayofWeek.substring(1).toLowerCase();
 
-            if (daysAfter == 0) {
+            String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
+            int startIndex = coordinates.indexOf("forecast\": ") + 12;
+            coordinates = coordinates.substring(startIndex);
+            int endIndex = coordinates.indexOf("\"");
+            coordinates = coordinates.substring(0, endIndex);
 
-                return image + image2 + "Hourly Temperature: " + temperature + "<br>";
 
-            } else {
+            String text = WeatherAPI(coordinates);
 
-                return image + image2 + dayofWeek + " Temperature: " + temperature + "<br>";
+            startIndex = text.indexOf(dayofWeek);
+            text = text.substring(startIndex);
 
-            }
+            startIndex = text.indexOf("icon") + 15;
+            endIndex = text.indexOf("\"");
+            text = text.substring(startIndex, endIndex);
+            text = text.replaceAll("\\D", "");
+
+            return Integer.parseInt(text);
 
         }
 
-        static class Handler implements HttpHandler {
-            @Override
-            public void handle(HttpExchange exchange) {
+    }
 
-                String method = exchange.getRequestMethod();
+    static String tempHTML(String placeCoordinates, int daysAfter) {
 
-                String response = "<html> <body style=\"background-color:#B0E0E6;\"> <img src=\"https://images.unsplash.com/photo-1601134467661-3d775b999c8b?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\" width=\"800\" height=\"500\" style=\"display : block; margin-bottom: 100-pk;\"> " +
-                        tempHTML("29.17,-81.07", 0) +
-                        tempHTML("29.17,-81.07", 1) +
-                        tempHTML("29.17,-81.07", 2) +
-                        tempHTML("29.17,-81.07", 3) +
-                        tempHTML("29.17,-81.07", 4) +
-                        tempHTML("29.17,-81.07", 5) +
-                        tempHTML("29.17,-81.07", 6) +
+        int temperature = getTemp(placeCoordinates, daysAfter);
+        String image = tempPicture(temperature);
+        String image2 = apiPicture(placeCoordinates, daysAfter);
 
-                        " <form action=\"/\" method=\"POST\">" + " <button type=\"submit\">Refresh</button>" + "<button onClick=\"\">Daytona Beach, Florida</button>" + "</body> </html>";
+        String dayofWeek = String.valueOf(LocalDateTime.now().plusDays(daysAfter).getDayOfWeek());
+        dayofWeek = dayofWeek.charAt(0) + dayofWeek.substring(1).toLowerCase();
 
-                try {
+        if (daysAfter == 0) {
 
-                    exchange.sendResponseHeaders(200, response.length());
-                    OutputStream os = exchange.getResponseBody();
-                    os.write(response.getBytes());
-                    os.close();
+            return image + image2 + "Hourly Temperature: " + temperature + "<br>";
 
-                } catch (IOException e) {
+        } else {
 
-                    System.out.print(e.getMessage());
+            return image + image2 + dayofWeek + " Temperature: " + temperature + "<br>";
 
-                }
+        }
+
+    }
+
+    static class Handler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) {
+
+            String method = exchange.getRequestMethod();
+
+            String response = "<html> <body style=\"background-color:#B0E0E6;\"> <img src=\"https://images.unsplash.com/photo-1601134467661-3d775b999c8b?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\" width=\"800\" height=\"500\" style=\"display : block; margin-bottom: 100-pk;\"> " +
+                    tempHTML("29.17,-81.07", 0) +
+                    tempHTML("29.17,-81.07", 1) +
+                    tempHTML("29.17,-81.07", 2) +
+                    tempHTML("29.17,-81.07", 3) +
+                    tempHTML("29.17,-81.07", 4) +
+                    tempHTML("29.17,-81.07", 5) +
+                    tempHTML("29.17,-81.07", 6) +
+
+                    " <form action=\"/\" method=\"POST\">" + " <button type=\"submit\">Refresh</button>" + "<button onClick=\"\">Daytona Beach, Florida</button>" + "</body> </html>";
+
+            try {
+
+                exchange.sendResponseHeaders(200, response.length());
+                OutputStream os = exchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+
+            } catch (IOException e) {
+
+                System.out.print(e.getMessage());
+
             }
         }
     }
+}
