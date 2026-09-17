@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'dotnet build'
+                bat 'mvn clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }
