@@ -274,13 +274,37 @@ public class App {
 
     }
 
+    static String mainPicture(String placeCoordinates) {
+
+        String regular = "<img src=\"https://images.unsplash.com/photo-1601134467661-3d775b999c8b?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\" width=\"800\" height=\"500\" style=\"display : block; margin-bottom: 100-pk;\"> ";
+        String rainy = "<img src=\"https://images.unsplash.com/photo-1626124902047-f3db8b02f740?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\" width=\"800\" height=\"500\" style=\"display : block; margin-bottom: 100-pk;\"> ";
+        String cloudy = "<img src=\"https://plus.unsplash.com/premium_photo-1733317236155-b0e1a2930f37?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\" width=\"800\" height=\"500\" style=\"display : block; margin-bottom: 100-pk;\"> ";
+
+        String forecast = stringForecast(placeCoordinates, 0);
+
+        if ((forecast.toLowerCase().contains("rain")) || (forecast.toLowerCase().contains("shower")) || (forecast.toLowerCase().contains("thunderstorm"))) {
+
+            return rainy;
+
+        } else if(forecast.toLowerCase().contains("cloud")) {
+
+            return cloudy;
+
+        } else {
+
+            return regular;
+
+        }
+
+    }
+
     static class Handler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) {
 
             String method = exchange.getRequestMethod();
 
-            String response = "<html> <body style=\"background-color:#B0E0E6;\"> <img src=\"https://images.unsplash.com/photo-1601134467661-3d775b999c8b?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\" width=\"800\" height=\"500\" style=\"display : block; margin-bottom: 100-pk;\"> " +
+            String response = "<html> <body style=\"background-color:#B0E0E6;\"> " + mainPicture("29.17,-81.07") +
                     tempHTML("29.17,-81.07", 0) +
                     tempHTML("29.17,-81.07", 1) +
                     tempHTML("29.17,-81.07", 2) +
