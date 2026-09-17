@@ -44,7 +44,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>Lib/</classpathPrefix>
-              <mainClass>com.mycompany.app</mainClass>
+              <mainClass>com.mycompany.app.App</mainClass>
             </manifest>
           </archive>
         </configuration>
