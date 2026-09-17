@@ -4,13 +4,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+            dir('my-app') {
                 bat 'mvn clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                }
             }
         }
         stage('Test') {
             steps {
+            dir('my-app') {
                bat 'make check || exit 0'
+               }
                junit '**/target/*.xml'
             }
         }
@@ -21,7 +25,9 @@ pipeline {
                     }
                 }
             steps {
+            dir('my-app') {
                 bat 'make publish'
+                }
             }
         }
     }
