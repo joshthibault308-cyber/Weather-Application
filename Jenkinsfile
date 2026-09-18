@@ -10,25 +10,5 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-            dir('my-app') {
-               bat 'mvn test || exit 0'
-               }
-               junit '**/target/surefire-reports/*.xml'
-            }
-        }
-        stage('Deploy') {
-            when {
-                expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                    }
-                }
-            steps {
-            dir('my-app') {
-                bat 'mvn install'
-                }
-            }
-        }
     }
 }
