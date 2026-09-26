@@ -296,7 +296,14 @@ public class App {
 
             String method = exchange.getRequestMethod();
 
-            String response = "<html> <body style=\"background-color:#B0E0E6;\"> " + mainPicture("29.17,-81.07") +
+            String response = "<html>" +
+                    "<head><style>" +
+                    "#toggle-box {display:none:}" +
+                    ".displayed-text {max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;" +
+                    ".btn-toggle {display: incline-block; background-color: " +
+                    ".button1:hover { background-color: #ffff00}" +
+                    "</style></head>" +
+                    " <body style=\"background-color:#B0E0E6;\"> " + mainPicture("29.17,-81.07") +
                     tempHTML("29.17,-81.07", 0) +
                     tempHTML("29.17,-81.07", 1) +
                     tempHTML("29.17,-81.07", 2) +
@@ -305,7 +312,7 @@ public class App {
                     tempHTML("29.17,-81.07", 5) +
                     tempHTML("29.17,-81.07", 6) +
 
-                    " <form action=\"/\" method=\"POST\">" + " <button type=\"submit\">Refresh</button>" + "<button onClick=\"\">Daytona Beach, Florida</button>" + "</body> </html>";
+                    " <form action=\"/\" method=\"POST\">" + " <button class=\"btn-toggle button1\" type=\"submit\">Refresh</button>" + "<button onClick=\"\">Daytona Beach, Florida</button>" + "</body> </html>";
 
             try {
 
