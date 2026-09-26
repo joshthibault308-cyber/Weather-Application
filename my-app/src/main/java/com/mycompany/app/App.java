@@ -298,10 +298,34 @@ public class App {
 
             String response = "<html>" +
                     "<head><style>" +
-                    "#toggle-box {display:none:}" +
-                    ".displayed-text {max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;" +
-                    ".btn-toggle {display: incline-block; background-color: " +
-                    ".button1:hover { background-color: #ffff00}" +
+                    "#dallas-toggle-box {display:none;}" +
+                    ".dallas-text {max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;}" +
+                    ".dallas-toggle {display: inline-block; background-color: #EFEFEF}" +
+                    ".dallas-toggle::after {content: \"Dallas Temperature:\";}" +
+                    "#dallas-toggle-box:checked ~ .dallas-text {max-height: 200px; transition: max-height 0.3s ease-in;}" +
+                    "#dallas-toggle-box:checked ~ .dallas-toggle::after {content: \"Close\";}" +
+
+                    "#newyork-toggle-box {display:none;}" +
+                    ".newyork-text {max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;}" +
+                    ".newyork-toggle {display: inline-block; background-color: #EFEFEF}" +
+                    ".newyork-toggle::after {content: \"New York City Temperature:\";}" +
+                    "#newyork-toggle-box:checked ~ .newyork-text {max-height: 200px; transition: max-height 0.3s ease-in;}" +
+                    "#newyork-toggle-box:checked ~ .newyork-toggle::after {content: \"Close\";}" +
+
+                    "#santafe-toggle-box {display:none;}" +
+                    ".santafe-text {max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;}" +
+                    ".santafe-toggle {display: inline-block; background-color: #EFEFEF}" +
+                    ".santafe-toggle::after {content: \"Santa Fe City Temperature:\";}" +
+                    "#santafe-toggle-box:checked ~ .santafe-text {max-height: 200px; transition: max-height 0.3s ease-in;}" +
+                    "#santafe-toggle-box:checked ~ .santafe-toggle::after {content: \"Close\";}" +
+
+                    "#sacramento-toggle-box {display:none;}" +
+                    ".sacramento-text {max-height:0; overflow:hidden; transition: max-height 0.3s ease-out;}" +
+                    ".sacramento-toggle {display: inline-block; background-color: #EFEFEF}" +
+                    ".sacramento-toggle::after {content: \"Sacramento Temperature:\";}" +
+                    "#sacramento-toggle-box:checked ~ .sacramento-text {max-height: 200px; transition: max-height 0.3s ease-in;}" +
+                    "#sacramento-toggle-box:checked ~ .sacramento-toggle::after {content: \"Close\";}" +
+
                     "</style></head>" +
                     " <body style=\"background-color:#B0E0E6;\"> " + mainPicture("29.17,-81.07") +
                     tempHTML("29.17,-81.07", 0) +
@@ -312,7 +336,12 @@ public class App {
                     tempHTML("29.17,-81.07", 5) +
                     tempHTML("29.17,-81.07", 6) +
 
-                    " <form action=\"/\" method=\"POST\">" + " <button class=\"btn-toggle button1\" type=\"submit\">Refresh</button>" + "<button onClick=\"\">Daytona Beach, Florida</button>" + "</body> </html>";
+                    "<div class=\"container>\" <form action=\"/\" method=\"POST\">" + " <button class=\"button button1\" type=\"submit\">Refresh</button> </form>" +
+                    "<input type=\"checkbox\" id=\"dallas-toggle-box\"> <p class=\"dallas-text\">" + tempHTML("32.85,-96.86", 0) + "</p>" + "<label for=\"dallas-toggle-box\" class=\"dallas-toggle\"> </label>" +
+                    "<input type=\"checkbox\" id=\"newyork-toggle-box\"> <p class=\"newyork-text\">" + tempHTML("40.78,-73.97", 0) + "</p>" + "<label for=\"newyork-toggle-box\" class=\"newyork-toggle\"> </label>" +
+                    "<input type=\"checkbox\" id=\"santafe-toggle-box\"> <p class=\"santafe-text\">" + tempHTML("35.61,-106.1", 0) + "</p>" + "<label for=\"santafe-toggle-box\" class=\"santafe-toggle\"> </label>" +
+                    "<input type=\"checkbox\" id=\"sacramento-toggle-box\"> <p class=\"sacramento-text\">" + tempHTML("38.5,-121.49", 0) + "</p>" + "<label for=\"sacramento-toggle-box\" class=\"sacramento-toggle\"> </label>" +
+                    "</div> </body> </html>";
 
             try {
 

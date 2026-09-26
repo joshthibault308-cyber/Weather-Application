@@ -7,12 +7,12 @@ COPY .mvn/ .mvn/
 COPY pom.xml .
 
 RUN --mount=type=cache,target=/root/.m2 \
-    ./mvnw dependency:go-offline -DskipTests
+    ./mvnw dependency:go-offline
 
 COPY ./src src/
 
 RUN --mount=type=cache,target=/root/.m2 \
-    ./mvnw package -DskipTests && \
+    ./mvnw package && \
     cp target/*.jar target/app.jar
 
 FROM eclipse-temurin:21-jre-jammy
