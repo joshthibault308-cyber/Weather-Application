@@ -16,7 +16,6 @@
 **/charts
 **/docker-compose*
 **/compose.y*ml
-target
 **/Dockerfile*
 **/node_modules
 **/npm-debug.log
