@@ -189,6 +189,75 @@ public class App {
 
     }
 
+    static String dayTimeBackground(String placeCoordinates) {
+
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH"));
+        String dateTime = "startTime\": \"" + date;
+
+        String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
+        int startIndex = coordinates.indexOf("forecastHourly") + 18;
+        coordinates = coordinates.substring(startIndex);
+        int endIndex = coordinates.indexOf("\"");
+        coordinates = coordinates.substring(0, endIndex);
+
+
+        String text = WeatherAPI(coordinates);
+
+        startIndex = text.indexOf(dateTime);
+        text = text.substring(startIndex);
+
+        startIndex = text.indexOf("isDaytime") + 12;
+        text = text.substring(startIndex);
+        endIndex = text.indexOf(",");
+        text = text.substring(0, endIndex);
+
+        if (text.equals("true")) {
+
+            return "#B0E0E6";
+
+        } else {
+
+            return "#9999FF";
+
+        }
+
+    }
+
+    static String wind(String placeCoordinates) {
+
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH"));
+        String dateTime = "startTime\": \"" + date;
+
+        String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
+        int startIndex = coordinates.indexOf("forecastHourly") + 18;
+        coordinates = coordinates.substring(startIndex);
+        int endIndex = coordinates.indexOf("\"");
+        coordinates = coordinates.substring(0, endIndex);
+
+
+        String text = WeatherAPI(coordinates);
+        startIndex = text.indexOf(dateTime);
+        text = text.substring(startIndex);
+
+        startIndex = text.indexOf("windSpeed") + 13;
+        text = text.substring(startIndex);
+        endIndex = text.indexOf("\",");
+        text = text.substring(0, endIndex);
+
+
+        String text2 = WeatherAPI(coordinates);
+        startIndex = text2.indexOf(dateTime);
+        text2 = text2.substring(startIndex);
+
+        startIndex = text2.indexOf("windDirection") + 17;
+        text2 = text2.substring(startIndex);
+        endIndex = text2.indexOf("\",");
+        text2 = text2.substring(0, endIndex);
+
+        return text + " " + text2 ;
+
+    }
+
     static String stringForecast(String placeCoordinates, int daysAfter) {
 
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH"));
@@ -250,13 +319,14 @@ public class App {
         String image = tempPicture(temperature);
         String image2 = apiPicture(placeCoordinates, daysAfter);
         String detailedForecast = stringForecast(placeCoordinates, daysAfter);
+        String wind = wind(placeCoordinates);
 
         String dayofWeek = String.valueOf(LocalDateTime.now().plusDays(daysAfter).getDayOfWeek());
         dayofWeek = dayofWeek.charAt(0) + dayofWeek.substring(1).toLowerCase();
 
         if (daysAfter == 0) {
 
-            return image + image2 + "Hourly Temperature: " + temperature + "<br>" + detailedForecast + "<br> <br>";
+            return image + image2 + "Hourly Temperature: " + temperature + "<br>" + "Wind: " + wind + "<br>" + detailedForecast + "<br> <br>";
 
         } else {
 
@@ -327,7 +397,7 @@ public class App {
                     "#sacramento-toggle-box:checked ~ .sacramento-toggle::after {content: \"Close\";}" +
 
                     "</style></head>" +
-                    " <body style=\"background-color:#B0E0E6;\"> " + mainPicture("29.17,-81.07") +
+                    " <body style=\"background-color:" + dayTimeBackground("29.17,-81.07") + ";\"> " + mainPicture("29.17,-81.07") +
                     tempHTML("29.17,-81.07", 0) +
                     tempHTML("29.17,-81.07", 1) +
                     tempHTML("29.17,-81.07", 2) +
@@ -336,7 +406,7 @@ public class App {
                     tempHTML("29.17,-81.07", 5) +
                     tempHTML("29.17,-81.07", 6) +
 
-                    "<div class=\"container>\" <form action=\"/\" method=\"POST\">" + " <button class=\"button button1\" type=\"submit\">Refresh</button> </form>" +
+                    "<div class=\"container\"> <form action=\"/\" method=\"POST\">" + " <button class=\"button button1\" type=\"submit\">Refresh</button> </form>" +
                     "<input type=\"checkbox\" id=\"dallas-toggle-box\"> <p class=\"dallas-text\">" + tempHTML("32.85,-96.86", 0) + "</p>" + "<label for=\"dallas-toggle-box\" class=\"dallas-toggle\"> </label>" +
                     "<input type=\"checkbox\" id=\"newyork-toggle-box\"> <p class=\"newyork-text\">" + tempHTML("40.78,-73.97", 0) + "</p>" + "<label for=\"newyork-toggle-box\" class=\"newyork-toggle\"> </label>" +
                     "<input type=\"checkbox\" id=\"santafe-toggle-box\"> <p class=\"santafe-text\">" + tempHTML("35.61,-106.1", 0) + "</p>" + "<label for=\"santafe-toggle-box\" class=\"santafe-toggle\"> </label>" +
