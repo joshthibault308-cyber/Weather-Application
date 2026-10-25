@@ -16,6 +16,8 @@ import java.util.Scanner;
 
 public class App {
 
+    private static final Logger logger = LogManager.getLogger("weather");
+
     public static void main(String[] args) throws IOException {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
