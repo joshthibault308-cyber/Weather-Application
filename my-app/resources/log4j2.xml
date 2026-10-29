@@ -6,7 +6,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${layout}" />
         </Console>
-        <File name="LogFile" fileName="/tmp/app.log">
+        <File name="LogFile" fileName="logs/app.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
         </File>
     </Appenders>
