@@ -64,6 +64,7 @@ public class App {
         } catch (Exception e) {
 
             throw new RuntimeException(e);
+            logger.error(e.getMessage());
 
         }
 
@@ -428,7 +429,7 @@ public class App {
 
             } catch (IOException e) {
 
-                System.out.print(e.getMessage());
+                logger.error(e.getMessage());
 
             }
         }
