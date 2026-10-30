@@ -22,11 +22,13 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        logger.info("test");
+        logger.info("Application Started");
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/", new Handler());
         server.start();
+
+        logger.info("Application has ended");
 
     }
 
