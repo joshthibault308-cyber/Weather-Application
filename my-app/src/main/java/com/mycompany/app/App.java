@@ -414,7 +414,7 @@ public class App {
 
                     "</style></head>" +
                     " <body style=\"background-color:" + dayTimeBackground("29.17,-81.07") + ";\"> " + mainPicture("29.17,-81.07") +
-                    tempHTML("29.17,-81.07", 0) +
+                    tempHTML("~29.17,-81.07", 0) +
                     tempHTML("29.17,-81.07", 1) +
                     tempHTML("29.17,-81.07", 2) +
                     tempHTML("29.17,-81.07", 3) +
