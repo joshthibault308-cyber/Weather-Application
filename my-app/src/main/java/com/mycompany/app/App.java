@@ -67,7 +67,7 @@ public class App {
 
         } catch (Exception e) {
 
-            logger.error(e.getMessage());
+            logger.error("Error for getting the coordinates of " + API + ". Error message: " + e.getMessage());
             throw new RuntimeException(e);
 
         }
@@ -438,7 +438,7 @@ public class App {
 
             } catch (IOException e) {
 
-                logger.error(e.getMessage());
+                logger.error("Error when making the application. Error message: " + e.getMessage());
 
             }
         }
