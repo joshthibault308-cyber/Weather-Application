@@ -63,7 +63,6 @@ public class App {
 
         } catch (Exception e) {
 
-            throw new RuntimeException(e);
             logger.error(e.getMessage());
 
         }
