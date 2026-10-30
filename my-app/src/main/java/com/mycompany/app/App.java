@@ -120,7 +120,7 @@ public class App {
             text = text.substring(startIndex, startIndex + 3);
             text = text.replaceAll("\\D", "");
 
-            logger.info("Temperature for " + placeCoordinates + " in " + daysAfter " days.");
+            logger.info("Temperature for " + placeCoordinates + " in " + daysAfter + " days.");
             return Integer.parseInt(text);
 
         }
