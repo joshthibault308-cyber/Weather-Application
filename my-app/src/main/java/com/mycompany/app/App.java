@@ -28,13 +28,15 @@ public class App {
         server.createContext("/", new Handler());
         server.start();
 
-        logger.info("Application has ended");
+//        logger.info("Application has ended");
 
     }
 
     static String WeatherAPI(String API) {
 
         try {
+
+            logger.info("Getting the National Weather Service API");
 
             URL url = new URL(API);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -94,6 +96,7 @@ public class App {
             text = text.substring(startIndex, startIndex + 3);
             text = text.replaceAll("\\D", "");
 
+            logger.info("Current temperature for " + placeCoordinates);
             return Integer.parseInt(text);
 
         } else {
@@ -117,6 +120,7 @@ public class App {
             text = text.substring(startIndex, startIndex + 3);
             text = text.replaceAll("\\D", "");
 
+            logger.info("Temperature for " + placeCoordinates + " in " + daysAfter " days.");
             return Integer.parseInt(text);
 
         }
@@ -222,10 +226,12 @@ public class App {
 
         if (text.equals("true")) {
 
+            logger.info("It is currently daytime for " + placeCoordinates);
             return "#B0E0E6";
 
         } else {
 
+            logger.info("It is currently nighttime for " + placeCoordinates);
             return "#9999FF";
 
         }
@@ -263,6 +269,7 @@ public class App {
         endIndex = text2.indexOf("\",");
         text2 = text2.substring(0, endIndex);
 
+        logger.info("The current wind speed and direction is:" + text + " " + text2);
         return text + " " + text2 ;
 
     }
@@ -290,7 +297,7 @@ public class App {
             endIndex = text.indexOf('"');
             text = text.substring(0, endIndex);
 
-
+            logger.info("The forecast today for " + placeCoordinates + " is: " + text);
             return text;
 
         } else {
@@ -315,7 +322,7 @@ public class App {
             endIndex = text.indexOf('"');
             text = text.substring(0, endIndex);
 
-
+            logger.info("The forecast in " + daysAfter + " is: " + text);
             return text;
 
         }
