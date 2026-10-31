@@ -276,7 +276,7 @@ public class App {
         endIndex = text2.indexOf("\",");
         text2 = text2.substring(0, endIndex);
 
-        logger.info("The current wind speed and direction is:" + text + " " + text2);
+        logger.info("The current wind speed and direction is: " + text + " " + text2);
         return text + " " + text2 ;
 
     }
