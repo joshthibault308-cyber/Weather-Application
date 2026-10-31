@@ -95,8 +95,6 @@ public class App {
             startIndex = text.indexOf(dateTime);
             text = text.substring(startIndex);
 
-            logger.debug("Temperature API Debug: " + text);
-
             startIndex = text.indexOf("temperature") + 14;
             text = text.substring(startIndex, startIndex + 3);
             text = text.replaceAll("\\D", "");
@@ -120,8 +118,6 @@ public class App {
 
             startIndex = text.indexOf(dayofWeek);
             text = text.substring(startIndex);
-
-            logger.debug("Temperature API Debug: " + text);
 
             startIndex = text.indexOf("temperature") + 14;
             text = text.substring(startIndex, startIndex + 3);
@@ -173,7 +169,7 @@ public class App {
             startIndex = text.indexOf(dateTime);
             text = text.substring(startIndex);
 
-            logger.debug("Picture API Debug: " + text);
+            logger.debug("API Debug: " + text);
 
             startIndex = text.indexOf("icon") + 7;
             text = text.substring(startIndex);
@@ -200,7 +196,7 @@ public class App {
             startIndex = text.indexOf(dayofWeek);
             text = text.substring(startIndex);
 
-            logger.debug("Picture API Debug: " + text);
+            logger.debug("API Debug: " + text);
 
             startIndex = text.indexOf("icon") + 7;
             text = text.substring(startIndex);
