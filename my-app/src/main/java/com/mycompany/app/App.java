@@ -100,6 +100,7 @@ public class App {
             text = text.replaceAll("\\D", "");
 
             logger.info("Current temperature for " + placeCoordinates);
+            logger.debug("Temperature API Debug temperature: " + text);
             return Integer.parseInt(text);
 
         } else {
@@ -124,6 +125,7 @@ public class App {
             text = text.replaceAll("\\D", "");
 
             logger.info("Temperature for " + placeCoordinates + " in " + daysAfter + " days.");
+            logger.debug("Temperature API Debug temperature: " + text);
             return Integer.parseInt(text);
 
         }
@@ -169,13 +171,12 @@ public class App {
             startIndex = text.indexOf(dateTime);
             text = text.substring(startIndex);
 
-            logger.debug("API Debug: " + text);
-
             startIndex = text.indexOf("icon") + 7;
             text = text.substring(startIndex);
             endIndex = text.indexOf(", ");
             text = text.substring(0, endIndex);
 
+            logger.debug("Picture API Debug: " + text);
             return "<img src=" + text + " width=\"25\" height=\"25\"\"> ";
 
 
@@ -196,13 +197,12 @@ public class App {
             startIndex = text.indexOf(dayofWeek);
             text = text.substring(startIndex);
 
-            logger.debug("API Debug: " + text);
-
             startIndex = text.indexOf("icon") + 7;
             text = text.substring(startIndex);
             endIndex = text.indexOf(", ");
             text = text.substring(0, endIndex);
 
+            logger.debug("Picture API Debug: " + text);
             return "<img src=" + text + " width=\"25\" height=\"25\"\"> ";
 
         }
