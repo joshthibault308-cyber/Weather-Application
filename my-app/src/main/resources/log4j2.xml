@@ -11,7 +11,7 @@
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="weather" level="debug" additivity="false" >
+        <Logger name="weather" level="info" additivity="false" >
             <AppenderRef ref="LogFile" />
             <AppenderRef ref="Console" />
         </Logger>
