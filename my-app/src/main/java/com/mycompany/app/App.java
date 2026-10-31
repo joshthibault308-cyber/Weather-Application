@@ -37,6 +37,7 @@ public class App {
         try {
 
             logger.info("Getting the National Weather Service API");
+            logger.debug("Coordinates of location: " + API);
 
             URL url = new URL(API);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -79,6 +80,8 @@ public class App {
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH"));
         String dateTime = "startTime\": \"" + date;
 
+        logger.debug("Current Date: " + dateTime);
+
         if (daysAfter == 0) {
             String coordinates = WeatherAPI("https://api.weather.gov/points/" + placeCoordinates + "#/properties");
             int startIndex = coordinates.indexOf("forecastHourly") + 18;
@@ -91,6 +94,8 @@ public class App {
 
             startIndex = text.indexOf(dateTime);
             text = text.substring(startIndex);
+
+            logger.debug("Temperature API Debug: " + text);
 
             startIndex = text.indexOf("temperature") + 14;
             text = text.substring(startIndex, startIndex + 3);
@@ -115,6 +120,8 @@ public class App {
 
             startIndex = text.indexOf(dayofWeek);
             text = text.substring(startIndex);
+
+            logger.debug("Temperature API Debug: " + text);
 
             startIndex = text.indexOf("temperature") + 14;
             text = text.substring(startIndex, startIndex + 3);
@@ -166,6 +173,8 @@ public class App {
             startIndex = text.indexOf(dateTime);
             text = text.substring(startIndex);
 
+            logger.debug("Picture API Debug: " + text);
+
             startIndex = text.indexOf("icon") + 7;
             text = text.substring(startIndex);
             endIndex = text.indexOf(", ");
@@ -190,6 +199,8 @@ public class App {
 
             startIndex = text.indexOf(dayofWeek);
             text = text.substring(startIndex);
+
+            logger.debug("Picture API Debug: " + text);
 
             startIndex = text.indexOf("icon") + 7;
             text = text.substring(startIndex);
