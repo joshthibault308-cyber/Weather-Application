@@ -28,8 +28,6 @@ public class App {
         server.createContext("/", new Handler());
         server.start();
 
-//        logger.info("Application has ended");
-
     }
 
     static String WeatherAPI(String API) {
